@@ -1,0 +1,17 @@
+truth table of home automation system
+Current State	  |  door_sensor	|  window_sensor |  Reset	 |    Next State   |  Alarm
+IDLE	          |       0       |    	    0	     |    0	   |       IDLE	     |    0
+IDLE	          |       1	      |         0	     |    0	   |    DOOR_OPEN	   |    0
+IDLE	          |       0	      |         1	     |    0	   |   WINDOW_OPEN   |	  0
+IDLE	          |       1       |	        1      |	  0    | ALARM_TRIGGERED |	  1
+DOOR_OPEN	      |       0       |       	0      |	  0    |	  DOOR_OPEN    |	  0
+DOOR_OPEN	      |       0       |       	1	     |    0    | ALARM_TRIGGERED |	  1
+DOOR_OPEN	      |       1       |	        0      |	  0	   |    DOOR_OPEN	   |    0
+WINDOW_OPEN     |	      0	      |         0      |   	0	   |   WINDOW_OPEN   |    0
+WINDOW_OPEN	    |       1	      |         0	     |    0	   | ALARM_TRIGGERED |	  1
+WINDOW_OPEN	    |       0	      |         1	     |    0	   |   WINDOW_OPEN	 |    0
+ALARM_TRIGGERED	|       0       |      	  0	     |    0	   |       IDLE	     |    0
+ALARM_TRIGGERED	|       1       |       	0      |	  0	   | ALARM_TRIGGERED |	  1
+ALARM_TRIGGERED	|       0	      |         1	     |    0	   | ALARM_TRIGGERED |	  1
+ALARM_TRIGGERED	|       1	      |         1  	   |    0    | ALARM_TRIGGERED |	  1
+Any State	      |       X	      |         X	     |    1	   |       IDLE      |  	0
