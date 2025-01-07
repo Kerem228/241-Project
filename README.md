@@ -6,7 +6,7 @@ module HomeAutomationSystem(
     output reg alarm
 );
 
-    // Define states
+   
     typedef enum reg [1:0] {
         IDLE = 2'b00,
         DOOR_OPEN = 2'b01,
@@ -16,7 +16,7 @@ module HomeAutomationSystem(
 
     state_t current_state, next_state;
 
-    // Sequential logic: State transition
+    
     always @(posedge clk or posedge reset) begin
         if (reset)
             current_state <= IDLE;
@@ -24,7 +24,7 @@ module HomeAutomationSystem(
             current_state <= next_state;
     end
 
-    // Combinational logic: Determine next state
+   
     always @(*) begin
         case (current_state)
             IDLE: begin
@@ -57,7 +57,7 @@ module HomeAutomationSystem(
         endcase
     end
 
-    // Output logic: Set alarm based on state
+   
     always @(current_state) begin
         case (current_state)
             ALARM_TRIGGERED: alarm = 1;
@@ -67,65 +67,7 @@ module HomeAutomationSystem(
 
 endmodule
 
-// Testbench for HomeAutomationSystem
-module HomeAutomationSystem_tb;
-    reg clk;
-    reg reset;
-    reg door_sensor;
-    reg window_sensor;
-    wire alarm;
 
-    HomeAutomationSystem uut (
-        .clk(clk),
-        .reset(reset),
-        .door_sensor(door_sensor),
-        .window_sensor(window_sensor),
-        .alarm(alarm)
-    );
-
-    // Clock generation
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk;
-    end
-
-    // Stimulus
-    initial begin
-        reset = 1;
-        door_sensor = 0;
-        window_sensor = 0;
-        #10;
-
-        reset = 0;
-        #10;
-
-        // Open door
-        door_sensor = 1;
-        #10;
-        door_sensor = 0;
-        #10;
-
-        // Open window
-        window_sensor = 1;
-        #10;
-        window_sensor = 0;
-        #10;
-
-        // Trigger alarm by opening both
-        door_sensor = 1;
-        window_sensor = 1;
-        #10;
-
-        // Reset sensors
-        door_sensor = 0;
-        window_sensor = 0;
-        #20;
-
-        $stop;
-    end
-endmodule
-
-//Topmodule
 module TopModule;
     reg clk;
     reg reset;
@@ -133,7 +75,7 @@ module TopModule;
     reg window_sensor;
     wire alarm;
 
-    
+  
     HomeAutomationSystem has (
         .clk(clk),
         .reset(reset),
@@ -142,13 +84,13 @@ module TopModule;
         .alarm(alarm)
     );
 
-    // Clock generation
+  
     initial begin
         clk = 0;
         forever #5 clk = ~clk;
     end
 
-    
+  
     initial begin
         $monitor("Time: %0t | Reset: %b | Door: %b | Window: %b | Alarm: %b", $time, reset, door_sensor, window_sensor, alarm);
         reset = 1;
@@ -159,24 +101,24 @@ module TopModule;
         reset = 0;
         #10;
 
-        // Open door
+       
         door_sensor = 1;
         #10;
         door_sensor = 0;
         #10;
 
-        // Open window
+       
         window_sensor = 1;
         #10;
         window_sensor = 0;
         #10;
 
-        // Trigger alarm by opening both
+     
         door_sensor = 1;
         window_sensor = 1;
         #10;
 
-        // Reset sensors
+     
         door_sensor = 0;
         window_sensor = 0;
         #20;
@@ -185,7 +127,7 @@ module TopModule;
     end
 endmodule
 
-// Testbench for HomeAutomationSystem
+
 module HomeAutomationSystem_tb;
     reg clk;
     reg reset;
@@ -201,7 +143,7 @@ module HomeAutomationSystem_tb;
         .alarm(alarm)
     );
 
-    // Clock generation
+  
     initial begin
         clk = 0;
         forever #5 clk = ~clk;
@@ -217,24 +159,24 @@ module HomeAutomationSystem_tb;
         reset = 0;
         #10;
 
-        // Open door
+    
         door_sensor = 1;
         #10;
         door_sensor = 0;
         #10;
 
-        // Open window
+     
         window_sensor = 1;
         #10;
         window_sensor = 0;
         #10;
 
-        // Trigger alarm by opening both
+    
         door_sensor = 1;
         window_sensor = 1;
         #10;
 
-        // Reset sensors
+    
         door_sensor = 0;
         window_sensor = 0;
         #20;
