@@ -125,6 +125,125 @@ module HomeAutomationSystem_tb;
     end
 endmodule
 
+//Topmodule
+module TopModule;
+    reg clk;
+    reg reset;
+    reg door_sensor;
+    reg window_sensor;
+    wire alarm;
+
+    
+    HomeAutomationSystem has (
+        .clk(clk),
+        .reset(reset),
+        .door_sensor(door_sensor),
+        .window_sensor(window_sensor),
+        .alarm(alarm)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    
+    initial begin
+        $monitor("Time: %0t | Reset: %b | Door: %b | Window: %b | Alarm: %b", $time, reset, door_sensor, window_sensor, alarm);
+        reset = 1;
+        door_sensor = 0;
+        window_sensor = 0;
+        #10;
+
+        reset = 0;
+        #10;
+
+        // Open door
+        door_sensor = 1;
+        #10;
+        door_sensor = 0;
+        #10;
+
+        // Open window
+        window_sensor = 1;
+        #10;
+        window_sensor = 0;
+        #10;
+
+        // Trigger alarm by opening both
+        door_sensor = 1;
+        window_sensor = 1;
+        #10;
+
+        // Reset sensors
+        door_sensor = 0;
+        window_sensor = 0;
+        #20;
+
+        $finish;
+    end
+endmodule
+
+// Testbench for HomeAutomationSystem
+module HomeAutomationSystem_tb;
+    reg clk;
+    reg reset;
+    reg door_sensor;
+    reg window_sensor;
+    wire alarm;
+
+    HomeAutomationSystem uut (
+        .clk(clk),
+        .reset(reset),
+        .door_sensor(door_sensor),
+        .window_sensor(window_sensor),
+        .alarm(alarm)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+   
+    initial begin
+        reset = 1;
+        door_sensor = 0;
+        window_sensor = 0;
+        #10;
+
+        reset = 0;
+        #10;
+
+        // Open door
+        door_sensor = 1;
+        #10;
+        door_sensor = 0;
+        #10;
+
+        // Open window
+        window_sensor = 1;
+        #10;
+        window_sensor = 0;
+        #10;
+
+        // Trigger alarm by opening both
+        door_sensor = 1;
+        window_sensor = 1;
+        #10;
+
+        // Reset sensors
+        door_sensor = 0;
+        window_sensor = 0;
+        #20;
+
+        $stop;
+    end
+endmodule
+
+
 
 //truth table of home automation system
 //Current State	  |  door_sensor  |  window_sensor   |     Reset	 |    Next State   |  Alarm
